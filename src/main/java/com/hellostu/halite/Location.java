@@ -11,4 +11,10 @@ public class Location {
         x = l.x;
         y = l.y;
     }
+
+    public double distanceFromLocation(Location location) {
+        double dX = (double)(location.x - x);
+        double dY = (double)(location.y - y);
+        return dX + dY;
+    }
 }

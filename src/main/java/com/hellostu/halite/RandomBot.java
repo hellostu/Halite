@@ -24,7 +24,7 @@ public class RandomBot {
                     }
                 }
             }
-        Networking.sendFrame(moves);
+            Networking.sendFrame(moves);
         }
     }
 }

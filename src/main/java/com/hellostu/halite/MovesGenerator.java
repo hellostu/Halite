@@ -8,14 +8,14 @@ import java.util.ArrayList;
 public class MovesGenerator {
 
     private MoveGenerator moveGenerator;
-    private GameMap gameMap;
+    private GameMapFetcher gameMapFetcher;
 
     ///////////////////////////////////////////////////////
     // Lifecycle
     ///////////////////////////////////////////////////////
 
-    public MovesGenerator(GameMap gameMap, MoveGenerator moveGenerator) {
-        this.gameMap = gameMap;
+    public MovesGenerator(GameMapFetcher gameMapFetcher, MoveGenerator moveGenerator) {
+        this.gameMapFetcher = gameMapFetcher;
         this.moveGenerator = moveGenerator;
     }
 
@@ -26,13 +26,15 @@ public class MovesGenerator {
     public ArrayList<Move> generateMoves() {
         ArrayList<Move> moves = new ArrayList<Move>();
 
-        gameMap = Networking.getFrame();
+        GameMap gameMap = gameMapFetcher.fetchGameMap();
+        moveGenerator.setGameMap(gameMap);
 
         for(int y = 0; y < gameMap.height; y++) {
             for(int x = 0; x < gameMap.width; x++) {
                 Move move = moveGenerator.generateMove(new Location(x, y));
-                if(move == null) continue;
-                moves.add(move);
+                if(move != null) {
+                    moves.add(move);
+                }
             }
         }
         return moves;
